@@ -177,6 +177,9 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# IDE config files
+.vscode
+
 ### Vue template
 # gitignore template for Vue.js projects
 #
@@ -186,7 +189,7 @@ fabric.properties
 docs/_book
 
 # TODO: where does this rule come from?
-test/
+#test/
 
 ### Go template
 # Binaries for programs and plugins
@@ -206,3 +209,13 @@ test/
 # vendor/
 
 test.html
+
+### STS ###
+target/
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
