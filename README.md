@@ -1,6 +1,6 @@
 ## PLICA
 
-Plica is a Powerlink AD Click Analysis System.
+Plica is a PowerLink Connection Analysis System.
 
 파워링크를 통하거나 직접 타겟 사이트에 접근할 시 클라이언트의 접속경로 및 정보를 수집하여 페이지 어드민에게 제공
 
