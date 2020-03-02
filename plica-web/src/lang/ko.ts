@@ -62,7 +62,10 @@ export default {
         clipboard: 'Clipboard',
         i18n: '언어',
         externalLink: '외부 링크',
-        profile: '프로필'
+        profile: '프로필',
+        test: '김만수',
+        test1: '나쁜놈',
+        test2: '헿♥'
     },
     navbar: {
         dashboard: '대시보드',

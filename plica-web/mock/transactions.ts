@@ -7,11 +7,11 @@ const transactionCount = 20
 
 for (let i = 0; i < transactionCount; i++) {
   transactionList.push({
-    orderId: faker.random.uuid(),
-    status: faker.random.arrayElement(['success', 'pending']),
+    orderId: 100,
+    status: 35,
     timestamp: faker.date.past().getTime(),
     username: faker.name.findName(),
-    price: parseFloat(faker.finance.amount(1000, 15000, 2))
+    price: 21
   })
 }
 

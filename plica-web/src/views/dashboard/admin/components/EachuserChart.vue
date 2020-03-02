@@ -11,14 +11,14 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
 
-export interface ILineChartData {
-  expectedData: number[]
-  actualData: number[]
-  powerLinkData: number[]
+export interface EachuserData {
+  naverData: number[]
+  googleData: number[]
+  daumData: number[]
 }
 
 @Component({
-  name: 'LineChart'
+  name: 'EachuserChart'
 })
 export default class extends mixins(ResizeMixin) {
   @Prop({ required: true }) private chartData!: ILineChartData
@@ -80,10 +80,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['전체', '직접 접속', '파워 링크']
+          data: ['naver', 'google', 'daum']
         },
         series: [{
-          name: '전체',
+          name: 'naver',
           itemStyle: {
             color: '#FF005A',
             lineStyle: {
@@ -93,12 +93,12 @@ export default class extends mixins(ResizeMixin) {
           },
           smooth: true,
           type: 'line',
-          data: chartData.expectedData,
+          data: chartData.naverData,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
         {
-          name: '직접 접속',
+          name: 'google',
           smooth: true,
           type: 'line',
           itemStyle: {
@@ -111,12 +111,12 @@ export default class extends mixins(ResizeMixin) {
               color: '#f3f8ff'
             }
           },
-          data: chartData.actualData,
+          data: chartData.googleData,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         },
         {
-          name: '파워 링크',
+          name: 'daum',
           smooth: true,
           type: 'line',
           itemStyle: {
@@ -129,7 +129,7 @@ export default class extends mixins(ResizeMixin) {
               color: '#f3f8ff'
             }
           },
-          data: chartData.powerLinkData,
+          data: chartData.daumData,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         }]

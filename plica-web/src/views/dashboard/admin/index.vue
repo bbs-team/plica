@@ -1,14 +1,72 @@
 <template>
   <div class="dashboard-editor-container">
-    <github-corner class="github-corner" />
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
-
+    <el-row>
+      <el-col
+        :xs="{span: 72}"
+        :sm="{span: 72}"
+        :md="{span: 72}"
+        :lg="{span: 36}"
+        :xl="{span: 36}"
+        style="padding-right:8px;margin-bottom:30px;"
+      >
+        <transaction-table />
+      </el-col>
+    </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+      <el-col
+        :xs="36"
+        :sm="36"
+        :lg="12"
+      >
+        <div style="margin-left:50px;font-size:20px">접속자 수</div>
+        <div class="chart-wrapper">
+          <line-chart :chart-data="lineChartData" />
+        </div>
+      </el-col>
+      <el-col
+        :xs="36"
+        :sm="36"
+        :lg="12"
+      >
+        <div style="margin-left:50px;font-size:20px">링크별 접속자 수</div>
+        <div class="chart-wrapper">
+          <eachuser-chart :chart-data="EachUserChartData" />
+        </div>
+      </el-col>
     </el-row>
 
-    <el-row :gutter="32">
+    <el-row>
+      <el-col
+        :xs="24"
+        :sm="24"
+        :lg="8"
+      >
+            <div class="chart-wrapper">
+          <bar-chart />
+        </div>
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="24"
+        :lg="8"
+      >
+            <div class="chart-wrapper">
+          <pie-chart />
+        </div>
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="24"
+        :lg="8"
+      >
+            <div class="chart-wrapper">
+          <keyword-chart />
+        </div>
+      </el-col>
+    </el-row>
+
+    <!-- <el-row :gutter="32">
       <el-col
         :xs="24"
         :sm="24"
@@ -23,10 +81,10 @@
         :sm="24"
         :lg="8"
       >
-        <div class="chart-wrapper">
+      <div class="chart-wrapper">
           <pie-chart />
         </div>
-      </el-col>
+      </el-col> 
       <el-col
         :xs="24"
         :sm="24"
@@ -36,9 +94,9 @@
           <bar-chart />
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
 
-    <el-row :gutter="8">
+    <!-- <el-row :gutter="8">
       <el-col
         :xs="{span: 24}"
         :sm="{span: 24}"
@@ -69,7 +127,7 @@
       >
         <box-card />
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -86,23 +144,21 @@ import PieChart from './components/PieChart.vue'
 import RadarChart from './components/RadarChart.vue'
 import TodoList from './components/TodoList/index.vue'
 import TransactionTable from './components/TransactionTable.vue'
+import KeywordChart from './components/keywordChart.vue'
+import EachuserChart, { EachuserData } from './components/EachuserChart.vue'
 
 const lineChartData: { [type: string]: ILineChartData } = {
   newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
+    expectedData: [220, 175, 220, 305, 280, 240, 280],
+    actualData: [120, 80, 90, 155, 160, 140, 145],
+    powerLinkData: [100, 95, 130, 150, 120, 100, 135]
+  }
+}
+const EachUserChartData: { [type: string]: EachuserData } = {
+  newVisitis: {
+    naverData: [130, 105, 110, 130, 140, 150, 120],
+    googleData: [120, 80, 90, 155, 160, 140, 145],
+    daumData: [100, 95, 130, 150, 120, 100, 135]
   }
 }
 
@@ -117,7 +173,9 @@ const lineChartData: { [type: string]: ILineChartData } = {
     PieChart,
     RadarChart,
     TodoList,
-    TransactionTable
+    TransactionTable,
+    KeywordChart,
+    EachuserChart
   }
 })
 export default class extends Vue {
@@ -125,6 +183,11 @@ export default class extends Vue {
 
   private handleSetLineChartData(type: string) {
     this.lineChartData = lineChartData[type]
+  }
+  private EachUserChartData = EachUserChartData.newVisitis
+
+  private handleSetEachUserChartData(type: string) {
+    this.EachUserChartData = EachUserChartData[type]
   }
 }
 </script>

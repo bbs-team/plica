@@ -4,31 +4,35 @@
     style="width: 100%;padding-top: 15px;"
   >
     <el-table-column
-      label="OrderID"
-      min-width="200"
-    >
-      <template slot-scope="scope">
-        {{ scope.row.orderId | orderNoFilter }}
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="Price"
-      width="195"
-      align="center"
-    >
-      <template slot-scope="scope">
-        ¥{{ scope.row.price | toThousandFilter }}
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="Status"
-      width="100"
+      label="Total"
       align="center"
     >
       <template slot-scope="{row}">
-        <el-tag :type="row.status | transactionStatusFilter">
-          {{ row.status }}
-        </el-tag>
+        {{ row.orderId }}명
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="Avr"
+      align="center"
+    >
+      <template slot-scope="{row}">
+        {{ row.price }}분
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="Max"
+      align="center"
+    >
+      <template slot-scope="{row}">
+          {{ row.status }}분
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="min"
+      align="center"
+    >
+      <template slot-scope="{row}">
+          {{ row.status }}분
       </template>
     </el-table-column>
   </el-table>
@@ -65,7 +69,7 @@ export default class extends Vue {
 
   private async fetchData() {
     const { data } = await getTransactions({ /* Your params here */ })
-    this.list = data.items.slice(0, 8)
+    this.list = data.items.slice(0, 1)
   }
 }
 </script>

@@ -839,7 +839,7 @@ components:
       type: object
       properties:
         orderId:
-          type: string
+          type: number
           format: uuid
         timestamp:
           $ref: '#/components/schemas/Timestamp'
@@ -850,7 +850,7 @@ components:
           type: number
           format: double
         status:
-          type: string
+          type: number
           enum:
             - success
             - pending

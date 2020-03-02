@@ -24,11 +24,11 @@ export interface IRoleData {
 }
 
 export interface ITransactionData {
-  orderId: string
+  orderId: number
   timestamp: string | number
   username: string
   price: number
-  status: string
+  status: number
 }
 
 export interface IUserData {

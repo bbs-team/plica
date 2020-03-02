@@ -12,7 +12,7 @@ import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
 
 @Component({
-  name: 'PieChart'
+  name: 'keywordChart'
 })
 export default class extends mixins(ResizeMixin) {
   @Prop({ default: 'chart' }) private className!: string
@@ -47,15 +47,15 @@ export default class extends mixins(ResizeMixin) {
       },
       series: [
         {
-          name: 'WEEKLY WRITE ARTICLES',
+          name: 'Searching Keyword',
           type: 'pie',
           roseType: 'radius',
           radius: [15, 95],
           center: ['50%', '38%'],
           data: [
-            { value: 320, name: 'naver' },
-            { value: 240, name: 'google' },
-            { value: 149, name: 'daum' },
+            { value: 380, name: 'test' },
+            { value: 220, name: 'test2' },
+            { value: 100, name: 'test3' },
           ],
           animationEasing: 'cubicInOut',
           animationDuration: 2600
