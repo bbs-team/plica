@@ -10,11 +10,12 @@ import echarts, { EChartOption } from 'echarts'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
+import LineChart, { ILineChartData } from './LineChart.vue'
 
 export interface EachuserData {
-  naverData: number[]
-  googleData: number[]
-  daumData: number[]
+    naverData: number[]
+    googleData: number[]
+    daumData: number[]
 }
 
 @Component({

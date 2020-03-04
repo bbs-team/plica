@@ -1,7 +1,8 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
-import { asyncRoutes, constantRoutes } from '@/router'
+import router, { asyncRoutes, constantRoutes } from '@/router'
 import store from '@/store'
+import { getPages } from '@/api/pages'
 
 const hasPermission = (roles: string[], route: RouteConfig) => {
   if (route.meta && route.meta.roles) {
@@ -43,10 +44,22 @@ class Permission extends VuexModule implements IPermissionState {
 
   @Action
   public GenerateRoutes(roles: string[]) {
-    let accessedRoutes
-    if (roles.includes('admin')) {
-      accessedRoutes = asyncRoutes
-    } else {
+    /* let pages: RouteConfig[] = []
+    getPages()
+      .then(response => {
+        response.data.items.forEach(function(value: RouteConfig) {
+          let page: RouteConfig = {
+            name: value.name,
+            path: value.path,
+            meta: value.meta
+          }
+          pages.push(page)
+        })
+        return pages
+      })
+    let accessedRoutes = asyncRoutes.push(pages) */
+    let accessedRoutes = asyncRoutes
+    if (!roles.includes('admin')) { // admin 은 다 볼 수 있다는 건가?
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
     this.SET_ROUTES(accessedRoutes)

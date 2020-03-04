@@ -35,6 +35,8 @@ import { SettingsModule } from '@/store/modules/settings'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
 import variables from '@/styles/_variables.scss'
+import { getPages } from '@/api/pages'
+import {RouteConfig} from "vue-router";
 
 @Component({
   name: 'SideBar',

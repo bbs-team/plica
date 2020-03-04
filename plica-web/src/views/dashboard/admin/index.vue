@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard-editor-container">
-
     <el-row>
       <el-col
         :xs="{span: 72}"
@@ -19,7 +18,9 @@
         :sm="36"
         :lg="12"
       >
-        <div style="margin-left:50px;font-size:20px">접속자 수</div>
+        <div style="margin-left:50px;font-size:20px">
+          접속자 수
+        </div>
         <div class="chart-wrapper">
           <line-chart :chart-data="lineChartData" />
         </div>
@@ -29,7 +30,9 @@
         :sm="36"
         :lg="12"
       >
-        <div style="margin-left:50px;font-size:20px">링크별 접속자 수</div>
+        <div style="margin-left:50px;font-size:20px">
+          링크별 접속자 수
+        </div>
         <div class="chart-wrapper">
           <eachuser-chart :chart-data="EachUserChartData" />
         </div>
@@ -42,7 +45,7 @@
         :sm="24"
         :lg="8"
       >
-            <div class="chart-wrapper">
+        <div class="chart-wrapper">
           <bar-chart />
         </div>
       </el-col>
@@ -51,7 +54,7 @@
         :sm="24"
         :lg="8"
       >
-            <div class="chart-wrapper">
+        <div class="chart-wrapper">
           <pie-chart />
         </div>
       </el-col>
@@ -60,7 +63,7 @@
         :sm="24"
         :lg="8"
       >
-            <div class="chart-wrapper">
+        <div class="chart-wrapper">
           <keyword-chart />
         </div>
       </el-col>
@@ -84,7 +87,7 @@
       <div class="chart-wrapper">
           <pie-chart />
         </div>
-      </el-col> 
+      </el-col>
       <el-col
         :xs="24"
         :sm="24"

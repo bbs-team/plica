@@ -1,8 +1,8 @@
 {
-  "name": "vue-typescript-admin-template",
+  "name": "plica",
   "version": "1.0.0",
   "private": true,
-  "author": "Chong Guo <armourcy@gmail.com>",
+  "author": "Seunghwan.na <nsh356@naver.com>, bonsung.gu",
   "scripts": {
     "serve": "concurrently \"npm:mock\" \"vue-cli-service serve\"",
     "build:prod": "vue-cli-service build",
@@ -110,17 +110,12 @@
     "webpack": "^4.41.5"
   },
   "bugs": {
-    "url": "https://github.com/armour/vue-typescript-admin-template/issues"
+    "url": "https://github.com/bbs-team/plica"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "keywords": [
-    "vue",
-    "typescript",
-    "admin",
-    "template",
-    "element-ui"
   ],
   "lint-staged": {
     "*.{js,vue}": [

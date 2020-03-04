@@ -8,6 +8,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.vue'
+import { getPages } from '@/api/pages'
+import router from '@/router'
 
 @Component({
   name: 'App',
@@ -15,5 +17,6 @@ import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.
     ServiceWorkerUpdatePopup
   }
 })
+
 export default class extends Vue {}
 </script>

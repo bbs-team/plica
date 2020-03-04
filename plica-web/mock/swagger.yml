@@ -20,6 +20,65 @@ tags:
   - name: users
     description: Users related api.
 paths:
+  /pages:
+    get:
+      tags:
+        - pages
+      summary: Get Page List
+      description: Return a list of pages.
+      operationId: getPages
+      parameters:
+        - name: name
+          in: query
+          description: Used to filter pages by name.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+  /pages/{name}:
+    get:
+      tags:
+        - pages
+      summary: Get Page
+      description: Return a page.
+      operationId: getPageByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            description: Used to filter pages by name.
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
   /articles:
     get:
       tags:

@@ -15,6 +15,9 @@ export interface ILineChartData {
   expectedData: number[]
   actualData: number[]
   powerLinkData: number[]
+  daumData: number[]
+  googleData: number[]
+  naverData: number[]
 }
 
 @Component({
