@@ -1,5 +1,4 @@
 import { Response, Request } from 'express'
-import { IPageData } from '../src/api/types'
 import { RouteConfig } from 'vue-router'
 
 /*
@@ -20,11 +19,10 @@ import { RouteConfig } from 'vue-router'
   }
 */
 
-const pageList: RouteConfig[] = [
+const routeList: RouteConfig[] = [
   {
     name: 'miso',
     path: '/dashboard/miso',
-    component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue'),
     meta: {
       roles: ['admin'],
       title: '석남 미소지움',
@@ -36,7 +34,6 @@ const pageList: RouteConfig[] = [
   {
     name: 'test',
     path: '/dashboard/test',
-    component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue'),
     meta: {
       roles: ['admin', 'viewer'],
       title: '테스트 페이지',
@@ -47,20 +44,20 @@ const pageList: RouteConfig[] = [
   }
 ]
 
-export const getPages = (req: Request, res: Response) => {
+export const getCustomRoutes = (req: Request, res: Response) => {
   const { name } = req.query
   return res.json({
     code: 20000,
     data: {
-      items: pageList
+      items: routeList
     }
   })
 }
 
-export const getPageByName = (req: Request, res: Response) => {
+export const getCustomRouteByName = (req: Request, res: Response) => {
   const { name } = req.params
   console.log(name)
-  const page = pageList.filter(page => {
+  const page = routeList.filter(page => {
     if (page.name !== undefined) {
       const lowerCaseName = page.name.toString().toLowerCase()
       return !(name && lowerCaseName.indexOf(name.toLowerCase()) < 0)
@@ -80,22 +77,23 @@ export const getPageByName = (req: Request, res: Response) => {
   })
 }
 
-export const updatePage = (req: Request, res: Response) => {
-  const { pageName } = req.params
-  const { page } = req.body
-  for (const v of pageList) {
-    if (v.name === pageName) {
+export const createCustomRoute = (req: Request, res: Response) => {
+  const { name } = req.params
+  const { route } = req.body
+  for (const v of routeList) {
+    if (v.name === name) {
+      routeList.push(route)
       return res.json({
         code: 20000,
         data: {
-          page
+          route
         }
       })
     }
   }
   return res.status(400).json({
-    code: 50004,
-    messaege: 'Invalid User'
+    code: 50404,
+    message: 'Not found: ' + name
   })
 }
 

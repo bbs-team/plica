@@ -43,7 +43,7 @@ export interface IUserData {
   roles: string[]
 }
 
-export interface IPageData {
+export interface ICustomRouteData {
   name: string // the name field is required when using <keep-alive>, it should also match its component's name property
                // detail see : https://vuejs.org/v2/guide/components-dynamic-async.html#keep-alive-with-Dynamic-Components
   path: string

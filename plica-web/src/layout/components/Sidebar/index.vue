@@ -22,6 +22,13 @@
           :base-path="route.path"
           :is-collapse="isCollapse"
         />
+        <sidebar-item
+          v-for="route in customRoutes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+          :is-collapse="isCollapse"
+        />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -35,8 +42,7 @@ import { SettingsModule } from '@/store/modules/settings'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
 import variables from '@/styles/_variables.scss'
-import { getPages } from '@/api/pages'
-import {RouteConfig} from "vue-router";
+import { CustomRouteModule } from '@/store/modules/routes'
 
 @Component({
   name: 'SideBar',
@@ -56,6 +62,10 @@ export default class extends Vue {
 
   get showLogo() {
     return SettingsModule.showSidebarLogo
+  }
+
+  get customRoutes() {
+    return CustomRouteModule.route
   }
 
   get menuActiveTextColor() {

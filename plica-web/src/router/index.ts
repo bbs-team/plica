@@ -8,8 +8,9 @@ import Layout from '@/layout/index.vue'
 import componentsRouter from './modules/components'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
-import { getPages } from '@/api/pages'
+import { getCustomRoutes } from '@/api/routes'
 import { PermissionModule } from '@/store/modules/permission'
+import {CustomRouteModule} from "@/store/modules/routes";
 
 Vue.use(Router)
 
@@ -99,7 +100,7 @@ export const constantRoutes: RouteConfig[] = [
           breadcrumb: false,
           alwaysShow: false
         }
-      },
+      }
     ]
   },
   {
@@ -115,7 +116,8 @@ export const constantRoutes: RouteConfig[] = [
 */
 
 export const asyncRoutes: RouteConfig[] = []
-let pageData: any = getPages().then(response => {
+CustomRouteModule.GetCustomRoute()
+/* let pageData: any = getPages().then(response => {
   return response.data.items.forEach(function(value: RouteConfig) {
     let page: RouteConfig = {
       name: value.name,
@@ -124,7 +126,7 @@ let pageData: any = getPages().then(response => {
     }
     asyncRoutes.push(page)
   })
-})
+}) */
 
 const createRouter = () => new Router({
   mode: 'history',
