@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IPageData } from './types'
+import { ICustomRouteData } from './types'
 import { RouteConfig } from 'vue-router'
 
 export const defaultPageData: RouteConfig = {
@@ -19,14 +19,21 @@ export const defaultPageData: RouteConfig = {
   }
 }
 
-export const getPages = () =>
+export const getCustomRoutes = () =>
   request({
-    url: '/pages',
+    url: '/pageRoutes',
     method: 'get'
   })
 
-export const getPage = (name: number) =>
+export const getCustomRoute = (name: number) =>
   request({
-    url: `/pages/${name}`,
+    url: `/pageRoutes/${name}`,
     method: 'get'
+  })
+
+export const createCustomRoute = (body: ICustomRouteData) =>
+  request({
+    url: `/pageRoutes`,
+    method: 'post',
+    data: body
   })

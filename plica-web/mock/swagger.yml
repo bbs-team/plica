@@ -20,13 +20,13 @@ tags:
   - name: users
     description: Users related api.
 paths:
-  /pages:
+  /pageRoutes:
     get:
       tags:
-        - pages
-      summary: Get Page List
-      description: Return a list of pages.
-      operationId: getPages
+        - routes
+      summary: Get Route List
+      description: Return a list of routes.
+      operationId: getCustomRoutes
       parameters:
         - name: name
           in: query
@@ -48,19 +48,53 @@ paths:
                       items:
                         type: array
                         items:
-  /pages/{name}:
+
+    post:
+      tags:
+        - routes
+      summary: Create New Route
+      description: Create a new route.
+      operationId: createCustomRoute
+      security:
+        - AccessTokenAuth: []
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: The data for new article.
+          schema:
+            $ref:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+                    properties:
+                      article:
+                        $ref: '#/components/schemas/Article'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+  /pageRoutes/{name}:
     get:
       tags:
-        - pages
-      summary: Get Page
-      description: Return a page.
-      operationId: getPageByName
+        - routes
+      summary: Get Route
+      description: Return a route.
+      operationId: getCustomRouteByName
       parameters:
         - name: name
           in: path
           required: true
           schema:
-            description: Used to filter pages by name.
+            description: Used to filter routes by name.
             type: string
       responses:
         200:
