@@ -5,14 +5,7 @@ import Router, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
 /* Router modules */
-import componentsRouter from './modules/components'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
-import { getCustomRoutes } from '@/api/routes'
-import { PermissionModule } from '@/store/modules/permission'
-import {CustomRouteModule} from "@/store/modules/routes";
-
-Vue.use(Router)
+import { CustomRouteModule } from '@/store/modules/routes'
 
 /*
   Note: sub-menu only appear when children.length>=1
@@ -43,6 +36,7 @@ Vue.use(Router)
   all roles can be accessed
 */
 
+CustomRouteModule.GetCustomRoute()
 export const constantRoutes: RouteConfig[] = [
   {
     path: '/redirect',
@@ -91,11 +85,10 @@ export const constantRoutes: RouteConfig[] = [
         }
       },
       {
-        path: '/dashboard/*',
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
+        path: '/detail/:id',
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/detailboard/index.vue'),
         name: 'DetailBoard',
         meta: {
-          title: 'DetailBoard',
           hidden: true,
           breadcrumb: false,
           alwaysShow: false
@@ -114,19 +107,7 @@ export const constantRoutes: RouteConfig[] = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
 */
-
-export const asyncRoutes: RouteConfig[] = []
-CustomRouteModule.GetCustomRoute()
-/* let pageData: any = getPages().then(response => {
-  return response.data.items.forEach(function(value: RouteConfig) {
-    let page: RouteConfig = {
-      name: value.name,
-      path: value.path,
-      meta: value.meta
-    }
-    asyncRoutes.push(page)
-  })
-}) */
+export const asyncRoutes: RouteConfig[] = CustomRouteModule.route
 
 const createRouter = () => new Router({
   mode: 'history',
@@ -141,6 +122,8 @@ const createRouter = () => new Router({
   routes: constantRoutes
 })
 
+console.log('after', constantRoutes)
+
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
@@ -148,5 +131,7 @@ export function resetRouter() {
   const newRouter = createRouter();
   (router as any).matcher = (newRouter as any).matcher // reset router
 }
+
+Vue.use(Router)
 
 export default router
