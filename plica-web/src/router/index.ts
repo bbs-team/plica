@@ -10,7 +10,7 @@ import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 import { getCustomRoutes } from '@/api/routes'
 import { PermissionModule } from '@/store/modules/permission'
-import {CustomRouteModule} from "@/store/modules/routes";
+import { CustomRouteModule } from '@/store/modules/routes'
 
 Vue.use(Router)
 
@@ -114,10 +114,10 @@ export const constantRoutes: RouteConfig[] = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
 */
-
-export const asyncRoutes: RouteConfig[] = []
 CustomRouteModule.GetCustomRoute()
-/* let pageData: any = getPages().then(response => {
+export const asyncRoutes: RouteConfig[] = []
+
+/* getCustomRoutes().then(response => {
   return response.data.items.forEach(function(value: RouteConfig) {
     let page: RouteConfig = {
       name: value.name,

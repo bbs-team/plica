@@ -1,13 +1,10 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout, getUserInfo } from '@/api/users'
-import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
 import { getCustomRoutes, createCustomRoute } from '@/api/routes'
 import { UserModule } from '@/store/modules/user'
-import { ICustomRouteData } from '@/api/types'
 
 export interface ICustomRoute {
   name: string // the name field is required when using <keep-alive>, it should also match its component's name property
@@ -39,8 +36,14 @@ class CustomRoute extends VuexModule implements ICustomRouteState {
     })
   }
 
+  @Mutation
+  private DELETE_ROUTES() {
+    this.route = []
+  }
+
   @Action
   public async GetCustomRoute() {
+    this.DELETE_ROUTES()
     let { data } = await getCustomRoutes()
     if (!data) {
       throw Error('Error in getCustomRoutes()')
@@ -49,15 +52,14 @@ class CustomRoute extends VuexModule implements ICustomRouteState {
     data.items.forEach(function(value: ICustomRoute) {
       self.route.push(value)
     })
-    console.log(this.route)
   }
 
   @Action
-  public async CreateCustomRoutes(data: ICustomRouteData) {
+  public async CreateCustomRoutes(data: any) {
     // Dynamically modify permissions
 
     await createCustomRoute(data)
-    await this.GetCustomRoute()
+    this.GetCustomRoute()
     resetRouter()
     // Generate dynamic accessible routes based on roles
     PermissionModule.GenerateRoutes(UserModule.roles)

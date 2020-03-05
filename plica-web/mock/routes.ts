@@ -78,22 +78,18 @@ export const getCustomRouteByName = (req: Request, res: Response) => {
 }
 
 export const createCustomRoute = (req: Request, res: Response) => {
-  const { name } = req.params
-  const { route } = req.body
-  for (const v of routeList) {
-    if (v.name === name) {
-      routeList.push(route)
-      return res.json({
-        code: 20000,
-        data: {
-          route
-        }
-      })
-    }
+  const { name, path, meta } = req.body
+  let data: RouteConfig = {
+    name: name,
+    path: path,
+    meta: meta
   }
-  return res.status(400).json({
-    code: 50404,
-    message: 'Not found: ' + name
+  routeList.push(data)
+  return res.json({
+    code: 20000,
+    data: {
+      routeList
+    }
   })
 }
 

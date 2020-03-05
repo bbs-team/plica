@@ -11,6 +11,12 @@
       class="breadcrumb-container"
     />
     <div class="right-menu">
+      <el-button
+        class="el-button--info"
+        @click="createRoute"
+      >
+        @CreateRoute
+      </el-button>
       <template v-if="device!=='mobile'">
         <header-search class="right-menu-item" />
         <error-log class="errLog-container right-menu-item hover-effect" />
@@ -81,6 +87,8 @@ import HeaderSearch from '@/components/HeaderSearch/index.vue'
 import LangSelect from '@/components/LangSelect/index.vue'
 import Screenfull from '@/components/Screenfull/index.vue'
 import SizeSelect from '@/components/SizeSelect/index.vue'
+import { CustomRouteModule } from '@/store/modules/routes'
+import { ICustomRouteData } from '@/api/types'
 
 @Component({
   name: 'Navbar',
@@ -95,6 +103,21 @@ import SizeSelect from '@/components/SizeSelect/index.vue'
   }
 })
 export default class extends Vue {
+  createRoute() {
+    let route: ICustomRouteData = {
+      name: 'test22',
+      path: '/dashboard/test22',
+      meta: {
+        roles: ['admin', 'viewer'],
+        title: '테스트 페이지22',
+        icon: 'example',
+        noCache: true,
+        affix: true
+      }
+    }
+
+    CustomRouteModule.CreateCustomRoutes(route)
+  }
   get sidebar() {
     return AppModule.sidebar
   }

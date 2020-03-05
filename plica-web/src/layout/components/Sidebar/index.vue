@@ -35,14 +35,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import { PermissionModule } from '@/store/modules/permission'
+import { PermissionModule, filterAsyncRoutes } from '@/store/modules/permission'
 import { SettingsModule } from '@/store/modules/settings'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
 import variables from '@/styles/_variables.scss'
 import { CustomRouteModule } from '@/store/modules/routes'
+import { UserModule } from '@/store/modules/user'
 
 @Component({
   name: 'SideBar',
@@ -65,7 +66,7 @@ export default class extends Vue {
   }
 
   get customRoutes() {
-    return CustomRouteModule.route
+    return filterAsyncRoutes(CustomRouteModule.route, UserModule.roles)
   }
 
   get menuActiveTextColor() {
