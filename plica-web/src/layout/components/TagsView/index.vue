@@ -58,6 +58,7 @@ import VueRouter, { Route, RouteRecord, RouteConfig } from 'vue-router'
 import { PermissionModule } from '@/store/modules/permission'
 import { TagsViewModule, ITagView } from '@/store/modules/tags-view'
 import ScrollPane from './ScrollPane.vue'
+import {CustomRouteModule} from "@/store/modules/routes";
 
 @Component({
   name: 'TagsView',
@@ -145,6 +146,7 @@ export default class extends Vue {
     if (name) {
       TagsViewModule.addView(this.$route)
     }
+
     return false
   }
 

@@ -10,7 +10,7 @@ import '@/styles/index.scss'
 import App from '@/App.vue'
 import store from '@/store'
 import { AppModule } from '@/store/modules/app'
-import router from '@/router'
+import router, {asyncRoutes} from '@/router'
 import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
@@ -18,6 +18,8 @@ import '@/utils/error-log'
 import '@/pwa/register-service-worker'
 import * as directives from '@/directives'
 import * as filters from '@/filters'
+import { CustomRouteModule } from '@/store/modules/routes'
+import {RouteConfig} from "vue-router";
 
 Vue.use(ElementUI, {
   size: AppModule.size, // Set element-ui default size

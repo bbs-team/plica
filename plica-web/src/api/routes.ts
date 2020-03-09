@@ -31,9 +31,9 @@ export const getCustomRoute = (name: number) =>
     method: 'get'
   })
 
-export const createCustomRoute = (body: ICustomRouteData) =>
+export const createCustomRoute = (data: any) =>
   request({
     url: `/pageRoutes`,
     method: 'post',
-    data: body
+    data
   })

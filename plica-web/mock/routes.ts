@@ -19,33 +19,56 @@ import { RouteConfig } from 'vue-router'
   }
 */
 
-const routeList: RouteConfig[] = [
-  {
-    name: 'miso',
-    path: '/dashboard/miso',
-    meta: {
-      roles: ['admin'],
-      title: '석남 미소지움',
-      icon: 'example',
-      noCache: true,
-      affix: true
-    }
+const routeList: RouteConfig[] = [{
+  path: '/detail/:id',
+  meta: {
+    title: '사이트 관리',
+    icon: 'dashboard',
+    noCache: true,
+    affix: true
   },
-  {
-    name: 'test',
-    path: '/dashboard/test',
-    meta: {
-      roles: ['admin', 'viewer'],
-      title: '테스트 페이지',
-      icon: 'example',
-      noCache: true,
-      affix: true
+  children: [
+    {
+      name: 'miso',
+      path: '/detail/miso',
+      redirect: 'redirect',
+      meta: {
+        roles: ['admin'],
+        title: '석남 미소지움',
+        icon: 'example',
+        noCache: true,
+        affix: true
+      }
+    },
+    {
+      name: 'test',
+      path: '/detail/test',
+      redirect: 'redirect',
+      meta: {
+        roles: ['admin', 'viewer'],
+        title: '테스트 페이지',
+        icon: 'example',
+        noCache: true,
+        affix: true
+      }
+    },
+    {
+      name: 'test2',
+      path: '/detail/test2',
+      redirect: 'redirect',
+      meta: {
+        roles: ['viewer'],
+        title: '테스트 페이지2',
+        icon: 'example',
+        noCache: true,
+        affix: true
+      }
     }
-  }
-]
+  ]
+}]
 
 export const getCustomRoutes = (req: Request, res: Response) => {
-  const { name } = req.query
+  console.log(routeList)
   return res.json({
     code: 20000,
     data: {
@@ -56,44 +79,52 @@ export const getCustomRoutes = (req: Request, res: Response) => {
 
 export const getCustomRouteByName = (req: Request, res: Response) => {
   const { name } = req.params
-  console.log(name)
-  const page = routeList.filter(page => {
-    if (page.name !== undefined) {
-      const lowerCaseName = page.name.toString().toLowerCase()
-      return !(name && lowerCaseName.indexOf(name.toLowerCase()) < 0)
+  if (routeList[0].children) {
+    const page = routeList[0].children.filter(page => {
+      if (page.name !== undefined) {
+        const lowerCaseName = page.name.toString().toLowerCase()
+        return !(name && lowerCaseName.indexOf(name.toLowerCase()) < 0)
+      }
+    })
+    if (page.length === 0) {
+      return res.status(404).json({
+        code: 50404,
+        message: 'Not found: ' + name
+      })
     }
-  })
-  if (page.length === 0) {
-    return res.status(404).json({
-      code: 50404,
-      message: 'Not found: ' + name
+    return res.json({
+      code: 20000,
+      data: {
+        items: page
+      }
     })
   }
-  return res.json({
-    code: 20000,
-    data: {
-      items: page
-    }
+  return res.status(500).json({
+    code: 50404,
+    message: 'Fail'
   })
 }
 
 export const createCustomRoute = (req: Request, res: Response) => {
-  const { name } = req.params
-  const { route } = req.body
-  for (const v of routeList) {
-    if (v.name === name) {
-      routeList.push(route)
-      return res.json({
-        code: 20000,
-        data: {
-          route
-        }
-      })
-    }
+  const { name, path, meta } = req.body
+  let data: RouteConfig = {
+    name: name,
+    path: path,
+    meta: meta
   }
-  return res.status(400).json({
+  if (routeList[0].children) {
+    routeList[0].children.push(data)
+    return res.json({
+      code: 20000,
+      data: {
+        routeList
+      }
+    })
+  }
+
+  return res.status(500).json({
     code: 50404,
-    message: 'Not found: ' + name
+    message: 'Fail'
   })
 }
 

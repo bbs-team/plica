@@ -22,22 +22,22 @@
           :base-path="route.path"
           :is-collapse="isCollapse"
         />
-        <sidebar-item
+        <!--<sidebar-item
           v-for="route in customRoutes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
           :is-collapse="isCollapse"
-        />
+        />-->
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import { PermissionModule } from '@/store/modules/permission'
+import { PermissionModule, filterAsyncRoutes } from '@/store/modules/permission'
 import { SettingsModule } from '@/store/modules/settings'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
@@ -52,6 +52,14 @@ import { CustomRouteModule } from '@/store/modules/routes'
   }
 })
 export default class extends Vue {
+  // 현재 강제 리프레쉬
+  @Watch('customRoutes')
+  onRouteChange() {
+    console.log('in Sidebar.vue router changed!')
+    this.$forceUpdate()
+    location.reload()
+  }
+
   get sidebar() {
     return AppModule.sidebar
   }
