@@ -145,8 +145,9 @@ export default class extends Vue {
 
       if (router.meta && router.meta.title) {
         // generate internationalized title
-        const i18ntitle = i18n.t(`route.${router.meta.title}`).toString()
-        data.meta.title = [...data.meta.title, i18ntitle]
+        // const i18ntitle = i18n.t(`route.${router.meta.title}`).toString()
+        const title = router.meta.title
+        data.meta.title = [...data.meta.title, title]
         if (router.redirect !== 'noRedirect') {
           // only push the routes with title
           // special case: need to exclude parent router without redirect

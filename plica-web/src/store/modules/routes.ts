@@ -33,9 +33,7 @@ class CustomRoute extends VuexModule implements ICustomRouteState {
 
     getCustomRoutes().then(response => {
       _self.ADD_CUSTOM_ROUTE(response.data.items)
-    }).catch(err => { console.log('GetCustomRoute(): ', err) })
-
-    console.log('in route.ts/GetCustomRoute(): ', this.route)
+    }).catch(err => { console.log('route.ts/GetCustomRoute(): ', err) })
   }
 
   @Action

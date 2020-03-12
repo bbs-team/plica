@@ -11,11 +11,11 @@
         <span
           v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
           class="no-redirect"
-        >{{ $t('route.' + item.meta.title) }}</span>
+        >{{ item.meta.title }}</span>
         <a
           v-else
           @click.prevent="handleLink(item)"
-        >{{ $t('route.' + item.meta.title) }}</a>
+        >{{ item.meta.title }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -26,6 +26,8 @@ import pathToRegexp from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord, Route } from 'vue-router'
 import { CustomRouteModule } from '@/store/modules/routes'
+import { asyncRoutes } from '@/router'
+import { findAsyncRoute } from '@/permission'
 
 @Component({
   name: 'Breadcrumb'
@@ -47,32 +49,54 @@ export default class extends Vue {
   }
 
   private getBreadcrumb() {
-    let matched = this.$route.matched.filter((item) => item.meta && item.meta.title)
+    let _self = this
+    let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
+
     const first = matched[0]
-    if (!this.isDashboard(first)) {
-      matched = [{ path: '/dashboard', meta: { title: 'dashboard' } } as RouteRecord].concat(matched)
+    if (first.name && this.isSiteManage(first.name)) {
+      let id = _self.$route.params.id
+      asyncRoutes.forEach(value => {
+        if (value.name === id) {
+          matched = matched.concat([{ path: value.path, meta: value.meta } as RouteRecord])
+          return
+        }
+        if (value.children) {
+          value.children.forEach(cv => {
+            if (cv.name === id) {
+              matched = matched.concat([{ path: cv.path, meta: cv.meta } as RouteRecord])
+            }
+          })
+        }
+      })
     }
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
   }
 
-  private isDashboard(route: RouteRecord) {
-    const name = route && route.name
+  private isSiteManage(name: string) {
     if (!name) {
       return false
     }
-    return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
+    return name.trim().toLowerCase() === 'SiteManage'.toLowerCase()
   }
-
+  // pathCompile, handleLink -> 사이트 관리 예외처리
   private pathCompile(path: string) {
     // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+    if (this.$route.name?.trim().toLowerCase() === 'SiteManage'.toLowerCase()) {
+      return
+    }
+
     const { params } = this.$route
     const toPath = pathToRegexp.compile(path)
     return toPath(params)
   }
 
   private handleLink(item: any) {
+    if (this.$route.name?.trim().toLowerCase() === 'SiteManage'.toLowerCase()) {
+      return
+    }
+
     const { redirect, path } = item
     if (redirect) {
       this.$router.push(redirect)

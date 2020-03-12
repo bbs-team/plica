@@ -1,8 +1,8 @@
-import router from './router'
+import router, { asyncRoutes } from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
-import { Route } from 'vue-router'
+import { Route, RouteConfig } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
 import i18n from '@/lang' // Internationalization
@@ -18,7 +18,7 @@ const getPageTitle = (key: string) => {
     const pageName = i18n.t(`route.${key}`)
     return `${pageName} - ${settings.title}`
   }
-  return `${settings.title}`
+  return `${key} - ${settings.title}`
 }
 
 router.beforeEach(async(to: Route, _: Route, next: any) => {
@@ -69,10 +69,29 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
   }
 })
 
+const findAsyncRoute = (key: string, to: RouteConfig) => {
+  if (key === to.name) {
+    document.title = getPageTitle(to.meta.title)
+    return
+  }
+
+  return (key === to.name ? to.meta.title
+    : to.children !== undefined ? to.children.forEach(value => {
+      findAsyncRoute(key, value)
+    }) : '')
+}
+
 router.afterEach((to: Route) => {
+  // asyncRoutes
   // Finish progress bar
   NProgress.done()
 
   // set page title
-  document.title = getPageTitle(to.meta.title)
+  if (to.meta.title === '사이트 관리') {
+    asyncRoutes.forEach(value => {
+      findAsyncRoute(to.params.id, value)
+    })
+  } else {
+    document.title = getPageTitle(to.meta.title)
+  }
 })

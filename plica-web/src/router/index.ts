@@ -45,7 +45,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
+        component: () => import(/* webpackChunkName: "redirect" */ '@/views/demo/redirect/index.vue')
       }
     ]
   },
@@ -79,7 +79,7 @@ export const constantRoutes: RouteConfig[] = [
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
         name: 'Dashboard',
         meta: {
-          title: 'dashboard',
+          title: '대시보드',
           icon: 'dashboard',
           affix: true
         }
@@ -87,11 +87,20 @@ export const constantRoutes: RouteConfig[] = [
       {
         path: '/detail/:id',
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/detailboard/index.vue'),
-        name: 'DetailBoard',
+        name: 'SiteManage',
         meta: {
+          title: '사이트 관리',
           hidden: true,
-          breadcrumb: false,
           alwaysShow: false
+        }
+      },
+      {
+        path: '/setting',
+        component: () => import(/* webpackChunkName: "icons" */ '@/views/demo/setting/index.vue'),
+        meta: {
+          title: '페이지 스타일 설정',
+          noCache: true,
+          hidden: true
         }
       }
     ]
@@ -107,7 +116,7 @@ export const constantRoutes: RouteConfig[] = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
 */
-export const asyncRoutes: RouteConfig[] = CustomRouteModule.route
+export let asyncRoutes: RouteConfig[] = CustomRouteModule.route
 
 const createRouter = () => new Router({
   mode: 'history',
@@ -121,8 +130,6 @@ const createRouter = () => new Router({
   base: process.env.BASE_URL,
   routes: constantRoutes
 })
-
-console.log('after', constantRoutes)
 
 const router = createRouter()
 

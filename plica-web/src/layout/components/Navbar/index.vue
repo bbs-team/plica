@@ -12,7 +12,7 @@
     />
     <div class="right-menu">
       <el-button
-        class="el-button--info"
+        class="el-button--small el-button--success right-menu-item"
         @click="createRoute"
       >
         @CreateRoute

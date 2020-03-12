@@ -18,7 +18,7 @@
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
         @contextmenu.prevent.native="openMenu(tag, $event)"
       >
-        {{ $t('route.' + tag.meta.title) }}
+        {{ tag.title }}
         <span
           v-if="!isAffix(tag)"
           class="el-icon-close"
@@ -58,7 +58,7 @@ import VueRouter, { Route, RouteRecord, RouteConfig } from 'vue-router'
 import { PermissionModule } from '@/store/modules/permission'
 import { TagsViewModule, ITagView } from '@/store/modules/tags-view'
 import ScrollPane from './ScrollPane.vue'
-import {CustomRouteModule} from "@/store/modules/routes";
+import { asyncRoutes } from '@/router'
 
 @Component({
   name: 'TagsView',
@@ -143,7 +143,23 @@ export default class extends Vue {
 
   private addTags() {
     const { name } = this.$route
+    let _self = this
     if (name) {
+      if (name.toLowerCase() === 'SiteManage'.toLowerCase()) {
+        let id = _self.$route.params.id
+        asyncRoutes.filter(value => {
+          if (value.name === id) {
+            TagsViewModule.addView(value)
+          }
+          if (value.children) {
+            value.children.filter(cv => {
+              if (cv.name === id) {
+                TagsViewModule.addView(cv)
+              }
+            })
+          }
+        })
+      }
       TagsViewModule.addView(this.$route)
     }
 

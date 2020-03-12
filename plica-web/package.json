@@ -115,8 +115,7 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "lint-staged": {
     "*.{js,vue}": [
       "vue-cli-service lint",

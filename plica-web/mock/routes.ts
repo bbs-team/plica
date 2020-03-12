@@ -19,53 +19,60 @@ import { RouteConfig } from 'vue-router'
   }
 */
 
-const routeList: RouteConfig[] = [{
-  path: '/detail/:id',
-  meta: {
-    title: '사이트 관리',
-    icon: 'dashboard',
-    noCache: true,
-    affix: true
+const routeList: RouteConfig[] = [
+  {
+    path: '/detail/:id',
+    redirect: 'noredirect',
+    meta: {
+      title: '사이트 관리',
+      icon: 'list',
+      noCache: true
+    },
+    children: [
+      {
+        name: 'miso',
+        path: '/detail/miso',
+        redirect: 'redirect',
+        meta: {
+          roles: ['admin'],
+          title: '석남 미소지움',
+          icon: 'example',
+          noCache: true
+        }
+      },
+      {
+        name: 'test',
+        path: '/detail/test',
+        redirect: 'redirect',
+        meta: {
+          roles: ['admin', 'viewer'],
+          title: '테스트 페이지',
+          icon: 'example',
+          noCache: true
+        }
+      },
+      {
+        name: 'test2',
+        path: '/detail/test2',
+        redirect: 'redirect',
+        meta: {
+          roles: ['viewer'],
+          title: '테스트 페이지2',
+          icon: 'example',
+          noCache: true
+        }
+      }
+    ]
   },
-  children: [
-    {
-      name: 'miso',
-      path: '/detail/miso',
-      redirect: 'redirect',
-      meta: {
-        roles: ['admin'],
-        title: '석남 미소지움',
-        icon: 'example',
-        noCache: true,
-        affix: true
-      }
-    },
-    {
-      name: 'test',
-      path: '/detail/test',
-      redirect: 'redirect',
-      meta: {
-        roles: ['admin', 'viewer'],
-        title: '테스트 페이지',
-        icon: 'example',
-        noCache: true,
-        affix: true
-      }
-    },
-    {
-      name: 'test2',
-      path: '/detail/test2',
-      redirect: 'redirect',
-      meta: {
-        roles: ['viewer'],
-        title: '테스트 페이지2',
-        icon: 'example',
-        noCache: true,
-        affix: true
-      }
+  {
+    path: '/setting',
+    name: 'setting',
+    meta: {
+      title: '페이지 스타일 설정',
+      icon: 'component'
     }
-  ]
-}]
+  }
+]
 
 export const getCustomRoutes = (req: Request, res: Response) => {
   console.log(routeList)
